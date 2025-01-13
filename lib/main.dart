@@ -174,7 +174,7 @@ class _ModelTestScreenState extends State<ModelTestScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _pickImage,
-              child: Text(' aPick Image and Run Inference'),
+              child: Text('Pick Image and Run Inference'),
             ),
           ],
         ),
