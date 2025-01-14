@@ -1,4 +1,4 @@
-# mlmm
+# Image Recognition
 
 A new Flutter project.
 
