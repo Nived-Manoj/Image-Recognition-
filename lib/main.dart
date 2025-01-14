@@ -160,23 +160,92 @@ class _ModelTestScreenState extends State<ModelTestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TFLite Model Test'),
+        title: Text(
+          'Animal Finder',
+          style: TextStyle(fontFamily: 'Roboto', fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.deepPurple,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _image != null
-                ? Image.file(_image!)
-                : Placeholder(fallbackHeight: 200, fallbackWidth: 200),
-            SizedBox(height: 20),
-            Text('Model Output: $_predictedLabel'),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: Text('Pick Image and Run Inference'),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedSwitcher(
+                duration: Duration(seconds: 1),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return ScaleTransition(scale: animation, child: child);
+                },
+                child: _image != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.file(
+                          _image!,
+                          key: ValueKey<File>(_image!),
+                          height: 300,
+                          width: 300,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Container(
+                        key: ValueKey<int>(0),
+                        height: 300,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(15),
+                          border:
+                              Border.all(color: Colors.deepPurple, width: 2),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'No Image Selected',
+                            style: TextStyle(
+                                color: Colors.deepPurple, fontSize: 18),
+                          ),
+                        ),
+                      ),
+              ),
+              SizedBox(height: 20),
+              AnimatedDefaultTextStyle(
+                duration: Duration(milliseconds: 300),
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.bold,
+                ),
+                child: Text('Model Output: $_predictedLabel'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _pickImage,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                ),
+                child: Text(
+                  'Pick Image and Run Inference',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+              SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Divider(color: Colors.deepPurple.shade200, thickness: 1),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Powered by TFLite',
+                style: TextStyle(
+                  color: Colors.deepPurple.shade400,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

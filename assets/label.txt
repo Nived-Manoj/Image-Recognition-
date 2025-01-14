@@ -1,5 +1,5 @@
-cat
-dog
-elephant 
-penguin
-tiger
+Elephant
+Dog
+Buffalo 
+Penguin
+Tiger
